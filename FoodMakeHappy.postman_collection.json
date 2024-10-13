@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "75308857-d94b-4c38-a2e0-f54d6c12f456",
+		"name": "FoodMakeHappy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30667704"
+	},
+	"item": [
+		{
+			"name": "Doador",
+			"item": [
+				{
+					"name": "Cadastrar Doador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Matheus Munhos\",\r\n  \"cpfCnpj\": \"468341\",\r\n  \"cep\": \"07175140\",\r\n  \"numeroEndereco\": \"880\",\r\n  \"complemento\": \"Prox ao Nagumo\",\r\n  \"contato\": {\r\n    \"telefone\": \"(11) 96748-8745\",\r\n    \"email\": \"matheus@gmail.com\",\r\n    \"observacao\": \"Ligar ao período da manhã.\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/doador/cadastrar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doador",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Todos Doadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/doador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Doador Por CPF/CNPJ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/doador/:cpfCnpj",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doador",
+								":cpfCnpj"
+							],
+							"variable": [
+								{
+									"key": "cpfCnpj",
+									"value": "468341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Doador Por Cep e KM",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/doador/:cep/:km",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doador",
+								":cep",
+								":km"
+							],
+							"variable": [
+								{
+									"key": "cep",
+									"value": "07175140"
+								},
+								{
+									"key": "km",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Doador",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/doador/:cpfCnpj",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doador",
+								":cpfCnpj"
+							],
+							"variable": [
+								{
+									"key": "cpfCnpj",
+									"value": "468341"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Receptor",
+			"item": [
+				{
+					"name": "Cadastrar Doador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Matheus Munhos\",\r\n  \"cpfCnpj\": \"468341\",\r\n  \"cep\": \"07175120\",\r\n  \"numeroEndereco\": \"880\",\r\n  \"complemento\": \"Prox ao posto\",\r\n  \"contato\": {\r\n    \"telefone\": \"(11) 96874-8596\",\r\n    \"email\": \"matheus@gmail.com\",\r\n    \"observacao\": \"Somente Whatsapp.\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/receptor/cadastrar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"receptor",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Todos Receptores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/receptor",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"receptor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Receptor Por CPF/CNPJ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/receptor/:cpfCnpj",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"receptor",
+								":cpfCnpj"
+							],
+							"variable": [
+								{
+									"key": "cpfCnpj",
+									"value": "468341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Receptor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/receptor/:cpfCnpj",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"receptor",
+								":cpfCnpj"
+							],
+							"variable": [
+								{
+									"key": "cpfCnpj",
+									"value": "468341"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "endereco",
+			"item": [
+				{
+					"name": "Buscar Endereco Por CEP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/endereco/:cep",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"endereco",
+								":cep"
+							],
+							"variable": [
+								{
+									"key": "cep",
+									"value": "07175120"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
