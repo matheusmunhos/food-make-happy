@@ -57,6 +57,10 @@ public class DoadorService {
         return doadorRepository.findAll();
     }
 
+    public Doador buscarPorCpfCnpj(String cpfCnpj){
+        return doadorRepository.findByCpfCnpj(cpfCnpj);
+    }
+
     public void excluir(String cpfCnpj){
         Doador doador = doadorRepository.findByCpfCnpj(cpfCnpj);
         doadorRepository.deleteById(doador.getId());
@@ -65,14 +69,8 @@ public class DoadorService {
     public List<Doador> buscarDoadoresProximos(String cep, double distanciaKm) {
 
         EnderecoResponse coordenadas = enderecoService.buscarEndereco(cep);
-
-        // Cria o ponto central a partir da longitude e latitude fornecidas
         Point pontoCentral = new Point(coordenadas.lng(), coordenadas.lat());
-
-        // Define a distância máxima para a consulta
         Distance distancia = new Distance(distanciaKm, Metrics.KILOMETERS);
-
-        // Busca os doadores próximos a esse ponto e dentro dessa distância
         return doadorRepository.findByLocalizacaoNear(pontoCentral, distancia);
     }
 }

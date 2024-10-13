@@ -4,7 +4,6 @@ import br.com.munhosdev.food_make_happy.domain.Doador;
 import br.com.munhosdev.food_make_happy.domain.dto.request.DoadorRequest;
 import br.com.munhosdev.food_make_happy.service.DoadorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +18,11 @@ public class DoadorController {
     @PostMapping("/cadastrar")
     public Doador cadastrarDoador(@RequestBody DoadorRequest doador){
         return service.cadastrarDoador(doador);
+    }
+
+    @GetMapping("/{cpfCnpj}")
+    public Doador buscarPorCpfCnpj(@PathVariable String cpfCnpj){
+        return service.buscarPorCpfCnpj(cpfCnpj);
     }
 
     @GetMapping("/{cep}/{km}")
