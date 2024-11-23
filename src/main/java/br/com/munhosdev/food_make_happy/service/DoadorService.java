@@ -5,8 +5,9 @@ import br.com.munhosdev.food_make_happy.domain.Endereco;
 import br.com.munhosdev.food_make_happy.domain.dto.request.DoadorRequest;
 import br.com.munhosdev.food_make_happy.domain.dto.response.EnderecoResponse;
 import br.com.munhosdev.food_make_happy.domain.enums.TipoUsuario;
+import br.com.munhosdev.food_make_happy.exception.DoadorAlreadyExistsException;
+import br.com.munhosdev.food_make_happy.exception.DoadorNotFoundException;
 import br.com.munhosdev.food_make_happy.repository.DoadorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -19,17 +20,19 @@ import java.util.List;
 @Service
 public class DoadorService {
 
-    @Autowired
-    private DoadorRepository doadorRepository;
+    private final DoadorRepository doadorRepository;
+    private final EnderecoService enderecoService;
 
-    @Autowired
-    private EnderecoService enderecoService;
+    public DoadorService(DoadorRepository doadorRepository, EnderecoService enderecoService) {
+        this.doadorRepository = doadorRepository;
+        this.enderecoService = enderecoService;
+    }
 
     public Doador cadastrarDoador(DoadorRequest doador){
         Doador newDoador = new Doador(doador);
         Doador validacao = doadorRepository.findByCpfCnpj(doador.cpfCnpj());
         if (validacao != null){
-            throw new RuntimeException("CPF/CNPJ Já Cadastrado.");
+            throw new DoadorAlreadyExistsException("CPF/CNPJ Já Cadastrado.");
         }
 
         if (doador.cpfCnpj().length() > 11){
@@ -58,11 +61,18 @@ public class DoadorService {
     }
 
     public Doador buscarPorCpfCnpj(String cpfCnpj){
-        return doadorRepository.findByCpfCnpj(cpfCnpj);
+        Doador doador = doadorRepository.findByCpfCnpj(cpfCnpj);
+        if(doador == null){
+            throw new DoadorNotFoundException("O doador de CPF/CNPJ: "+cpfCnpj+" Não foi encontrado.");
+        }
+        return doador;
     }
 
     public void excluir(String cpfCnpj){
         Doador doador = doadorRepository.findByCpfCnpj(cpfCnpj);
+        if(doador == null){
+            throw new DoadorNotFoundException("O doador de CPF/CNPJ: "+cpfCnpj+" Não foi encontrado.");
+        }
         doadorRepository.deleteById(doador.getId());
     }
 
@@ -72,5 +82,9 @@ public class DoadorService {
         Point pontoCentral = new Point(coordenadas.lng(), coordenadas.lat());
         Distance distancia = new Distance(distanciaKm, Metrics.KILOMETERS);
         return doadorRepository.findByLocalizacaoNear(pontoCentral, distancia);
+    }
+
+    public void atualizar(Doador doador){
+        doadorRepository.save(doador);
     }
 }

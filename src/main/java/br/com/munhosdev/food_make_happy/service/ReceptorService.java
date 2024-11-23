@@ -1,12 +1,12 @@
 package br.com.munhosdev.food_make_happy.service;
 
-import br.com.munhosdev.food_make_happy.domain.Doador;
 import br.com.munhosdev.food_make_happy.domain.Endereco;
 import br.com.munhosdev.food_make_happy.domain.Receptor;
-import br.com.munhosdev.food_make_happy.domain.dto.request.DoadorRequest;
 import br.com.munhosdev.food_make_happy.domain.dto.request.ReceptorRequest;
 import br.com.munhosdev.food_make_happy.domain.dto.response.EnderecoResponse;
 import br.com.munhosdev.food_make_happy.domain.enums.TipoUsuario;
+import br.com.munhosdev.food_make_happy.exception.ReceptorAlreadyExistsException;
+import br.com.munhosdev.food_make_happy.exception.ReceptorNotFoundException;
 import br.com.munhosdev.food_make_happy.repository.ReceptorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -27,7 +27,7 @@ public class ReceptorService {
         Receptor newReceptor = new Receptor(receptor);
         Receptor validacao = receptorRepository.findByCpfCnpj(receptor.cpfCnpj());
         if (validacao != null){
-            throw new RuntimeException("CPF/CNPJ Já Cadastrado.");
+            throw new ReceptorAlreadyExistsException("CPF/CNPJ Já Cadastrado.");
         }
 
         if (receptor.cpfCnpj().length() > 11){
@@ -52,7 +52,11 @@ public class ReceptorService {
     }
 
     public Receptor buscarPorCpfCnpj(String cpfCnpj){
-        return receptorRepository.findByCpfCnpj(cpfCnpj);
+        Receptor receptor = receptorRepository.findByCpfCnpj(cpfCnpj);
+        if(receptor == null){
+            throw new ReceptorNotFoundException("O receptor de CPF/CNPJ: "+cpfCnpj+" Não foi encontrado.");
+        }
+        return receptor;
     }
 
     public List<Receptor> buscarTodos() {
@@ -61,6 +65,9 @@ public class ReceptorService {
 
     public void exluir(String cpfCnpj) {
         Receptor receptor = receptorRepository.findByCpfCnpj(cpfCnpj);
+        if(receptor == null){
+            throw new ReceptorNotFoundException("O receptor de CPF/CNPJ: "+cpfCnpj+" Não foi encontrado.");
+        }
         receptorRepository.deleteById(receptor.getId());
     }
 }

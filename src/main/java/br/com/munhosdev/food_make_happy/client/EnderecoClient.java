@@ -5,9 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "EnderecoClient", url = "${feign.url.cep}")
+@FeignClient(name = "EnderecoClient", url = "${feign.url.cep}",path = "/json")
 public interface EnderecoClient {
 
     @GetMapping("/{cep}")
-    public EnderecoResponse getEndereco(@PathVariable String cep);
+    EnderecoResponse getEndereco(@PathVariable String cep);
 }

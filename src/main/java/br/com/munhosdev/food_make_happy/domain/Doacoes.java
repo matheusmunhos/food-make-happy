@@ -1,5 +1,6 @@
 package br.com.munhosdev.food_make_happy.domain;
 
+import br.com.munhosdev.food_make_happy.domain.dto.request.DoacaoRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,20 @@ public class Doacoes {
     private String id;
 
     private String alimento;
-    private String quantidade;
+    private Integer quantidade;
     private LocalDate validade;
     private Boolean lacrado;
-    private String valorEstimado;
+    private Double valorEstimado;
     @DBRef
     private Doador doador;
     @DBRef
     private Receptor receptor;
+
+    public Doacoes (DoacaoRequest request){
+        this.alimento = request.alimento();
+        this.quantidade = request.quantidade();
+        this.validade = request.validade();
+        this.lacrado = request.lacrado();
+        this.valorEstimado = request.valorEstimado();
+    }
 }

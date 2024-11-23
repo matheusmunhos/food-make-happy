@@ -2,7 +2,6 @@ package br.com.munhosdev.food_make_happy.config;
 
 import br.com.munhosdev.food_make_happy.domain.Doador;
 import br.com.munhosdev.food_make_happy.domain.Receptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
@@ -12,8 +11,11 @@ import jakarta.annotation.PostConstruct;
 @Configuration
 public class MongoConfig {
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
+
+    public MongoConfig(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
 
     @PostConstruct
     public void initIndexes() {

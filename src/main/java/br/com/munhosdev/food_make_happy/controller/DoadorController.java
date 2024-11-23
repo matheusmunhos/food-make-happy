@@ -3,7 +3,6 @@ package br.com.munhosdev.food_make_happy.controller;
 import br.com.munhosdev.food_make_happy.domain.Doador;
 import br.com.munhosdev.food_make_happy.domain.dto.request.DoadorRequest;
 import br.com.munhosdev.food_make_happy.service.DoadorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/doador")
 public class DoadorController {
 
-    @Autowired
-    private DoadorService service;
+    private final DoadorService service;
+
+    public DoadorController(DoadorService service) {
+        this.service = service;
+    }
 
     @PostMapping("/cadastrar")
     public Doador cadastrarDoador(@RequestBody DoadorRequest doador){
